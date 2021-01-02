@@ -1,4 +1,4 @@
-all: isort
+all: isort txtfind
 
 txtfind: txtfind.c
 	gcc -Wall -g txtfind.c -o txtfind
@@ -9,4 +9,4 @@ isort: isort.c
 .PHONY: clean all
 
 clean:
-	rm isort
+	rm isort txtfind
