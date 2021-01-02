@@ -2,9 +2,7 @@
 #include <string.h>
 
 #define WORD 50
-#define LINE 500
-
-
+#define LINE 512
 
 int Get_word_and_mode(char *word, char *mode)
 {
@@ -54,7 +52,7 @@ int get_word(char *word, int *len)
     {
         ch = getchar();
     }
-    while (status!=EOF && ch != ' ' && ch != '\t' && ch != '\n')
+    while (i < WORD-1 && status!=EOF && ch != ' ' && ch != '\t' && ch != '\n')
     {
         word[i++] = ch;
         status = scanf("%c",&ch);
@@ -86,11 +84,90 @@ void check_words(char *word, int len)
         }
 }
 
+int get_lines(char* line)
+{
+    char ch;
+    int i=0;
+    int status = scanf("%c",&ch);
+    if(ch == 13)
+    {
+        ch = getchar();
+    }
+    while (i < LINE-1 && status != EOF &&ch!='\n')
+    {
+        line[i++] = ch;
+        status = scanf("%c",&ch);
+        if(ch == 13)
+        {
+            ch = getchar();
+        }
+    }
+    line[++i] = '\0';
+    return status != EOF;
+}
+
+int substrings(char *word1, char *word2)
+{
+    int i=0;
+    int j=0;
+    while (word2[i] && word2[j])
+    {
+        if(word1[i]==word2[j])
+        {
+            i++;
+            j++;
+            if(!word1[i])
+            {
+                return 1;
+            }
+        }
+        else
+        {
+            i=0;
+            j++;
+        }
+    }
+    return 0;
+}
+
+int line_contains(char *word, char *line)
+{
+    return 0;
+}
+
+
+void check_lines(char* word)
+{
+    char line[LINE] = {0};
+    while (get_lines(line))
+    {
+        if(substrings(word, line))
+        {
+            printf("%s\n",line);
+        }
+    }
+    if(substrings(word, line))
+    {
+        printf("%s\n",line);
+    }
+}
+
 int main()
 {
-    // while (scanf("%c",&ch)!=EOF) //How to scan till the end of the file
     char word[WORD] = {0};
     char mode;
     int len = Get_word_and_mode(word, &mode);
-    check_words(word, len);
+    if(mode == 'a')
+    {
+        check_words(word, len);
+    }
+    else if(mode == 'b')
+    {
+        check_lines(word);
+    }
+    else
+    {
+        printf("Not a valid input\n");
+    }
+    
 }
