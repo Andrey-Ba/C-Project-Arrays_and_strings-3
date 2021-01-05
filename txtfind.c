@@ -159,11 +159,12 @@ int main()
     int len = Get_word_and_mode(word, &mode);
     if(mode == 'a')
     {
-        check_words(word, len);
+        check_lines(word);
+        
     }
     else if(mode == 'b')
     {
-        check_lines(word);
+        check_words(word, len);
     }
     else
     {
